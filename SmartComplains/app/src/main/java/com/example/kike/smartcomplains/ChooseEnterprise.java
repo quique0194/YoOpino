@@ -1,12 +1,15 @@
 package com.example.kike.smartcomplains;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -28,14 +31,28 @@ import java.util.List;
 import java.util.Map;
 
 public class ChooseEnterprise extends AppCompatActivity {
-
+    private ListView enterprisesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_enterprise);
+
+        enterprisesList = (ListView) findViewById(R.id.enterprisesList);
+
         GetEnterprisesTask task = new GetEnterprisesTask();
         task.execute();
+
+        enterprisesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                HashMap<String, String> item = (HashMap<String, String>) parent.getAdapter().getItem(position);
+                Log.d("ITEM", item.toString());
+                Intent i = new Intent(getApplicationContext(), ComplainsActivity.class);
+                i.putExtra("enterprise_json", item.get("json"));
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -123,8 +140,11 @@ public class ChooseEnterprise extends AppCompatActivity {
                 for (int i = 0; i < json.length(); ++i) {
                     JSONObject item = json.getJSONObject(i);
                     HashMap<String, String> map = new HashMap<String, String>();
+                    map.put("id", item.getString("id"));
                     map.put("name", item.getString("name"));
                     map.put("category", item.getString("category"));
+                    map.put("img", item.getString("img"));
+                    map.put("json", item.toString());
                     data.add(map);
                 }
                 SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(),
@@ -132,8 +152,7 @@ public class ChooseEnterprise extends AppCompatActivity {
                         android.R.layout.two_line_list_item,
                         new String[] {"name", "category"},
                         new int[] {android.R.id.text1, android.R.id.text2});
-                ListView lv = (ListView) findViewById(R.id.enterprisesList);
-                lv.setAdapter(adapter);
+                enterprisesList.setAdapter(adapter);
             } catch (JSONException e) {
                 Log.e("ERROR", e.getMessage());
                 e.printStackTrace();

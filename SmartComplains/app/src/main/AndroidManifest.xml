@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kike.smartcomplains" >
 
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="23" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,12 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ComplainsActivity"
+            android:label="@string/title_activity_complains"
+            android:parentActivityName=".ChooseEnterprise" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.kike.smartcomplains.ChooseEnterprise" />
+        </activity>
     </application>
-
-    <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="23" />
-
-    <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
 
 </manifest>

@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_complains">Complains Activity</string>
+
+    <string name="complain">Complain</string>
+    <string name="view_other_complains">View other complains</string>
+    <string name="reputation">Reputation</string>
 </resources>
