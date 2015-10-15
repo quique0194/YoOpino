@@ -1,5 +1,6 @@
 package com.example.kike.smartcomplains;
 
+import android.animation.TimeInterpolator;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
@@ -30,12 +31,27 @@ import java.net.URL;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ComplainsActivity extends AppCompatActivity {
     private HashMap<String, String> enterprise = null;
     private final String TAG = "COMPLAINS";
     private TabHost tabs;
     private ListView complainsList = null;
+    private boolean activityIsVisible = true;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activityIsVisible = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        activityIsVisible = false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +135,7 @@ public class ComplainsActivity extends AppCompatActivity {
     }
 
     private class SubmitComplainTask extends AsyncTask<String, Void, String> {
-        String the_url = "http://10.0.2.2:5000/submit_complain/?title=%s&detail=%s&enterprise_id=%s";
+        String the_url = String.format("http://%s", Constants.HOST) + "/submit_complain/?title=%s&detail=%s&enterprise_id=%s";
         private static final String TAG = "HttpGET";
         URL url = null;
         HttpURLConnection urlConnection = null;
@@ -153,17 +169,36 @@ public class ComplainsActivity extends AppCompatActivity {
         }
     }
 
-    private class GetComplainsTask extends AsyncTask<String, Void, String> {
-        String the_url = "http://10.0.2.2:5000/complains/?id=%s";
+    private class GetComplainsTask extends AsyncTask<String, String, String> {
+        String the_url = String.format("http://%s", Constants.HOST) + "/complains/?id=%s";
         private static final String TAG = "HttpGET";
         URL url = null;
         HttpURLConnection urlConnection = null;
         LinkedList<HashMap<String, String>> data = new LinkedList<HashMap<String, String>>();
 
         @Override
-        protected String doInBackground(String... params) {
-            Log.d("ENTERPRISE_ID", params[0]);
-            the_url = String.format(the_url, params[0]);
+        protected String doInBackground(final String... params) {
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    String response = doRequest(params[0]);
+                    if (response != null) {
+                        publishProgress(response);
+                    }
+                }
+            };
+
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(task, 0, 2000);
+
+            return null;
+        }
+
+        private String doRequest(String enterprise_id) {
+            if (!activityIsVisible) {
+                return null;
+            }
+            the_url = String.format(the_url, enterprise_id);
 
             try {
                 url = new URL(the_url);
@@ -182,16 +217,20 @@ public class ComplainsActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return "";
+            return null;
         }
+
         @Override
-        protected void onPostExecute(String s) {
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            String s = values[0];
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
             Log.d(TAG, s);
             try {
                 JSONArray json = new JSONArray(s);
+                data = new LinkedList<HashMap<String, String>>();
                 for (int i = 0; i < json.length(); ++i) {
                     JSONObject item = json.getJSONObject(i);
                     HashMap<String, String> map = new HashMap<String, String>();

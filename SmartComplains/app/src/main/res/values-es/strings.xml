@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">Smart Complains</string>
+
+<string name="hello_world">Hola mundo!</string>
+<string name="action_settings">Settings</string>
+<string name="title_activity_complains">Información de la Empresa</string>
+
+<string name="complain">Queja</string>
+<string name="view_other_complains">Ver otras quejas</string>
+<string name="reputation">Reputación</string>
+<string name="title">Título</string>
+<string name="complain_details">Detalles de la queja</string>
+<string name="submit">Enviar</string>
+<string name="where_are_you">¿Dónde estas?</string>
+</resources>

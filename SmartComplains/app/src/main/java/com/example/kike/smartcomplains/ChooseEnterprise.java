@@ -78,7 +78,7 @@ public class ChooseEnterprise extends AppCompatActivity {
     }
 
     private class GetEnterprisesTask extends AsyncTask<Float, Void, String> {
-        String the_url = "http://10.0.2.2:5000/enterprises/?lat=10&lon=20&radius=11";
+        String the_url = String.format("http://%s/enterprises/?lat=10&lon=20&radius=11", Constants.HOST);
         private static final String TAG = "HttpGET";
         URL url = null;
         HttpURLConnection urlConnection = null;
