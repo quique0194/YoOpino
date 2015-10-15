@@ -34,10 +34,11 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView android:id="@+id/textView1"
-                        android:text="Contenido Tab 1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/complains_list"
+                        android:layout_gravity="center_horizontal" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -46,10 +47,31 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView android:id="@+id/textView2"
-                        android:text="Contenido Tab 2"
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/complain_title"
+                        android:hint="@string/title"
+                        android:layout_gravity="center_horizontal" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:ems="10"
+                        android:hint="@string/complain_details"
+                        android:id="@+id/complain_detail"
+                        android:layout_gravity="center_horizontal" />
+
+                    <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/submit"
+                        android:id="@+id/submit"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="submitComplain" />
+
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

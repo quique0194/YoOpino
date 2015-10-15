@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">SmartComplains</string>
+    <string name="app_name">Smart Complains</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_complains">Complains Activity</string>
+    <string name="title_activity_complains">Enterprise information</string>
 
     <string name="complain">Complain</string>
     <string name="view_other_complains">View other complains</string>
     <string name="reputation">Reputation</string>
+    <string name="title">Title</string>
+    <string name="complain_details">Complain Details</string>
+    <string name="submit">Submit</string>
 </resources>
