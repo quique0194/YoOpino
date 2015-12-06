@@ -48,7 +48,7 @@ public class ChooseEnterprise extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String, String> item = (HashMap<String, String>) parent.getAdapter().getItem(position);
                 Log.d("ITEM", item.toString());
-                Intent i = new Intent(getApplicationContext(), ComplainsActivity.class);
+                Intent i = new Intent(ChooseEnterprise.this, ComplainsActivity.class);
                 i.putExtra("enterprise_json", item.get("json"));
                 startActivity(i);
             }
@@ -147,7 +147,7 @@ public class ChooseEnterprise extends AppCompatActivity {
                     map.put("json", item.toString());
                     data.add(map);
                 }
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(),
+                SimpleAdapter adapter = new SimpleAdapter(ChooseEnterprise.this,
                         data,
                         android.R.layout.two_line_list_item,
                         new String[] {"name", "category"},

@@ -239,7 +239,7 @@ public class ComplainsActivity extends AppCompatActivity {
                     map.put("json", item.toString());
                     data.add(map);
                 }
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(),
+                SimpleAdapter adapter = new SimpleAdapter(ComplainsActivity.this,
                         data,
                         android.R.layout.two_line_list_item,
                         new String[] {"title", "detail"},
